@@ -17,7 +17,7 @@ public class firstScript {
         driver.manage().window().maximize();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1,groups = {"Regression","Sanity"})
     void selectItem() {
         WebElement Computers = driver.findElement(By.xpath("/html/body/div[6]/div[2]/ul[1]/li[1]/a"));
         Actions action = new Actions(driver);
@@ -30,7 +30,7 @@ public class firstScript {
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]/div/div[2]/h2/a")).click();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2,enabled = true)
     void addToCart() {
         driver.findElement(By.id("product_enteredQuantity_3")).clear();
         driver.findElement(By.id("product_enteredQuantity_3")).sendKeys("1");
@@ -39,7 +39,7 @@ public class firstScript {
         driver.findElement(By.id("dialog-notifications-success"));
         String expectedMessage = "The product has been added to your shopping cart";
        String confirmation= driver.findElement(By.xpath("//*[@id=\"bar-notification\"]/div")).getText();
-        if(expectedMessage.equalsIgnoreCase(confirmation))
+        if(expectedMessage==confirmation)
             System.out.println("Lenovo IdeaCentre 600 All-in-One PC - successfully added to cart ");
         else
             System.out.println("Lenovo IdeaCentre 600 All-in-One PC - unable to add to cart ");
@@ -63,7 +63,7 @@ public class firstScript {
         driver.findElement(By.id("checkout")).click();
         }
         @Test(priority = 4)
-        void checkout(){
+        void checkout() throws InterruptedException {
 
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[1]/div[3]/button[1]")).click();
         driver.findElement(By.id("ShipToSameAddress")).click();
@@ -87,7 +87,8 @@ public class firstScript {
         }
 
         @Test(priority = 5)
-        void paymentProcess(){
+        void paymentProcess() throws InterruptedException {
+            Thread.sleep(3000);
         driver.findElement(By.id("paymentmethod_1")).click();
         driver.findElement(By.xpath("//button[@class='button-1 payment-method-next-step-button']")).click();
         WebElement CreditCard = driver.findElement(By.id("CreditCardType"));
@@ -110,6 +111,7 @@ public class firstScript {
 
  @AfterClass
     void close() {
-        driver.close();
+
+         driver.close();
     }
 }
